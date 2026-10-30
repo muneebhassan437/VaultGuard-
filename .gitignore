@@ -1,0 +1,6 @@
+# virtual environment
+vaultguard/
+
+# macOS / Jupyter clutter
+.DS_Store
+.ipynb_checkpoints/
