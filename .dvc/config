@@ -1,0 +1,5 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = s3://muneeb-vaultguard-dvc-448079093743-us-east-2-an/vaultguard-s3-user
+    region = ca-central-1
