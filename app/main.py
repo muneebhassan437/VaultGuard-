@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 import joblib
 from pydantic import BaseModel
@@ -5,7 +6,8 @@ import pandas as pd
 from validation import TransactionInput
 
 app = FastAPI()
-model = joblib.load("../models/logistic_regression_model.joblib")  # Load your pre-trained model here
+MODEL_PATH = os.getenv("MODEL_PATH", "../models/logistic_regression_model.joblib")
+model = joblib.load(MODEL_PATH)  # Load your pre-trained model here
 
 @app.get("/")
 def read_root():
