@@ -1,0 +1,9 @@
+vaultguard/
+Notebooks/
+Data/
+.git/
+.dvc/
+**/__pycache__/
+**/.ipynb_checkpoints/
+.DS_Store
+*.dvc

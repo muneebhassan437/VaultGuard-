@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import os
 
 st.title("VaultGuard AI")
 st.write("Enter the required features below to generate a prediction.")
@@ -60,12 +61,27 @@ if submit_button:
     st.subheader("Prediction Results")
 
 
+    # Determine if it's fraud based on your rule or API response
     if input_data["type"] != "TRANSFER" and input_data["type"] != "CASH_OUT":
-        st.json(is_not_fraud)
+        is_fraud = False
     else:
-        response = requests.post("http://127.0.0.1:8000/predict", json=input_data)
-        st.json(response.json())
+        API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
+        try:
+            response = requests.post(f"{API_URL}/predict", json=input_data)
+            # Assuming your API returns JSON like {"is_fraud": true/false}
+            result = response.json()
+            is_fraud = result.get("is_fraud", False)
+        except requests.exceptions.ConnectionError:
+            st.error(f"Could not connect to the backend API at {API_URL}.")
+            is_fraud = None
 
-        
+    # Display the appropriate message based on the fraud prediction
+    if is_fraud is not None:
+        if is_fraud:
+            st.error("🚨 Transaction Unsuccessful / Fraud Detected!")
+        else:
+            st.success("✅ Transaction Successful!")
+
+
 
     
